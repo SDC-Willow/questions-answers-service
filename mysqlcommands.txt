@@ -1,0 +1,79 @@
+CREATE TABLE Questions (
+  question_id INTEGER NOT NULL AUTO_INCREMENT,
+  product_id INTEGER,
+  question_body TEXT,
+  question_date VARCHAR(25),
+  asker_name VARCHAR(255),
+  asker_email VARCHAR(255),
+  reported BOOL,
+  question_helpfulness INTEGER,
+  PRIMARY KEY (question_id)
+);
+
+SELECT * FROM Questions ORDER BY question_id LIMIT 5;
+
+LOAD DATA LOCAL INFILE '/Users/louisla/senior/sdc/questions-answers-service/csvData/questions.csv'
+INTO TABLE Questions
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+SELECT question_id, question_body, question_date, asker_name, question_helpfulness, reported from questions where product_id = 1 AND reported = 0;
+
+SELECT
+  question_id,
+  question_body,
+  question_date,
+  asker_name,
+  question_helpfulness,
+  JSON_OBJECT(
+    question_id, 5) AS answers
+FROM Questions
+WHERE product_id = 1 AND reported = 0;
+
+
+
+
+CREATE TABLE Answers (
+  answer_id INTEGER NOT NULL AUTO_INCREMENT,
+  question_id INTEGER,
+  body TEXT,
+  date_written VARCHAR(25),
+  answerer_name VARCHAR(255),
+  answerer_email VARCHAR(255),
+  reported BOOL,
+  helpfulness INTEGER,
+  PRIMARY KEY (answer_id),
+  FOREIGN KEY (question_id)
+    REFERENCES Questions(question_id)
+);
+
+
+LOAD DATA LOCAL INFILE '/Users/louisla/senior/sdc/questions-answers-service/csvData/answers.csv'
+INTO TABLE Answers
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+SELECT * FROM Answers ORDER BY answer_id LIMIT 5;
+
+CREATE TABLE Photos (
+  table_id INTEGER,
+  answer_id INTEGER,
+  url VARCHAR(255),
+  FOREIGN KEY (answer_id)
+    REFERENCES Answers(answer_id)
+);
+
+LOAD DATA LOCAL INFILE '/Users/louisla/senior/sdc/questions-answers-service/csvData/answers_photos.csv'
+INTO TABLE Photos
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+SELECT * FROM Photos ORDER BY answer_id LIMIT 5;

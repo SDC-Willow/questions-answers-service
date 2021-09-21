@@ -1,0 +1,6 @@
+node_modules
+config.js
+answers_photos.csv
+answers.csv
+questions.csv
+/csvData

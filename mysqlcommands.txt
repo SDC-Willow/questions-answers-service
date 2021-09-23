@@ -21,18 +21,53 @@ IGNORE 1 ROWS;
 
 SELECT question_id, question_body, question_date, asker_name, question_helpfulness, reported from questions where product_id = 1 AND reported = 0;
 
+
 SELECT
   question_id,
   question_body,
   question_date,
   asker_name,
   question_helpfulness,
-  JSON_OBJECT(
-    question_id, 5) AS answers
+  reported,
+  (
+    SELECT JSON_OBJECTAGG(
+      Answers.answer_id, (JSON_OBJECT(
+        'id', answer_id,
+        'body', body,
+        'date', date_written,
+        'answerer_name', answerer_name,
+        'helpfulness', helpfulness,
+        'photos', (JSON_ARRAY('links', 'url1', 'url2', 'url3'))))
+    )
+    FROM answers
+    WHERE question_id = questions.question_id
+  ) AS answers
 FROM Questions
 WHERE product_id = 1 AND reported = 0;
 
 
+SELECT
+  question_id,
+  question_body,
+  question_date,
+  asker_name,
+  question_helpfulness,
+  reported,
+  (
+    SELECT JSON_OBJECTAGG(
+      answers.answer_id, (JSON_OBJECT(
+        'id', answer_id,
+        'body', body,
+        'date', date_written,
+        'answerer_name', answerer_name,
+        'helpfulness', helpfulness,
+        'photos', (JSON_ARRAY('url1', 'url2', 'url3'))))
+    )
+    FROM answers
+    WHERE question_id = questions.question_id
+  ) AS answers
+FROM Questions
+WHERE product_id = 1 AND reported = 0;
 
 
 CREATE TABLE Answers (
@@ -77,3 +112,18 @@ IGNORE 1 ROWS;
 
 
 SELECT * FROM Photos ORDER BY answer_id LIMIT 5;
+
+ALTER TABLE Answers ADD COLUMN photos VARCHAR(255);
+
+UPDATE Answers t1
+INNER JOIN Photos t2 ON Answers.answer_id = Photos.answer_id
+SET Answers.Photo = t2.Age
+
+ALTER TABLE Photos DROP COLUMN table_id;
+
+UPDATE Answers
+JOIN
+  (SELECT answer_id,GROUP_CONCAT(photos) as max FROM Answers where meta_key = "Name"
+group by answers_id
+  ) AS photos on answers.answer_id=photos.answer_id
+SET answers.photos = photos.max

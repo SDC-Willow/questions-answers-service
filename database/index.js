@@ -5,6 +5,11 @@ const $ = require('jquery');
 const connection = mysql.createConnection(mysqlConfig);
 
 const getQuestions = (productId, callback) => {
+
+  let newdata;
+  let photosarray = [];
+  let allQuestionIds = [];
+
   let questions = `
   SELECT
     question_id,
@@ -21,7 +26,7 @@ const getQuestions = (productId, callback) => {
           'date', date_written,
           'answerer_name', answerer_name,
           'helpfulness', helpfulness,
-          'photos', (JSON_ARRAY('links', 'url1', 'url2', 'url3'))
+          'photos', (JSON_ARRAY())
         ))
       )
       FROM Answers
@@ -31,7 +36,33 @@ const getQuestions = (productId, callback) => {
   WHERE product_id = ${productId} AND reported = 0;`;
 
   // console.log(connection.query(questions))
-  connection.query(questions, callback);
+  connection.query(questions, (error, result) => {
+    if (error) {
+      console.log(error)
+    } else {
+      newdata = result;
+
+      for (let i = 0; i < newdata.length; i ++) {
+        if (newdata[i].answers !== null) {
+          let placeholder = JSON.parse(newdata[i].answers);
+          newdata[i].answers = placeholder;
+        }
+      }
+
+      for (let j = 0; j < result.length; j++) {
+        if (result[j].answers !== null) {
+          let answerids = Object.keys(result[j].answers);
+          for (let m = 0; m < answerids.length; m++) {
+            allQuestionIds.push(answerids[m]);
+          }
+        }
+      }
+
+      // console.log(allQuestionIds)
+      callback(newdata, allQuestionIds)
+    }
+  });
+
 };
 
 const getAnswersPhotos = (answerIds, callback) => {

@@ -4,6 +4,11 @@ const port = 3000
 const db = require('../database');
 const bodyParser = require('body-parser');
 
+// caching all routes
+const apicache = require('apicache');
+let cache = apicache.middleware;
+app.use(cache('5 minutes'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

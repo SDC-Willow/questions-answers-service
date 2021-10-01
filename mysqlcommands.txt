@@ -1,3 +1,5 @@
+create database atelier;
+
 CREATE TABLE Questions (
   question_id INTEGER NOT NULL AUTO_INCREMENT,
   product_id INTEGER,
@@ -13,6 +15,13 @@ CREATE TABLE Questions (
 SELECT * FROM Questions ORDER BY question_id LIMIT 5;
 
 LOAD DATA LOCAL INFILE '/Users/louisla/senior/sdc/questions-answers-service/csvData/questions.csv'
+INTO TABLE Questions
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/home/ubuntu/data/questions.csv'
 INTO TABLE Questions
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -39,8 +48,8 @@ SELECT
         'helpfulness', helpfulness,
         'photos', (JSON_ARRAY('links', 'url1', 'url2', 'url3'))))
     )
-    FROM answers
-    WHERE question_id = questions.question_id
+    FROM Answers
+    WHERE question_id = Questions.question_id
   ) AS answers
 FROM Questions
 WHERE product_id = 1 AND reported = 0;
@@ -92,6 +101,13 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
+LOAD DATA LOCAL INFILE '/home/ubuntu/data/answers.csv'
+INTO TABLE Answers
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
 
 SELECT * FROM Answers ORDER BY answer_id LIMIT 5;
 
@@ -105,6 +121,13 @@ CREATE TABLE Photos (
 );
 
 LOAD DATA LOCAL INFILE '/Users/louisla/senior/sdc/questions-answers-service/csvData/answers_photos.csv'
+INTO TABLE Photos
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/home/ubuntu/data/answers_photos.csv'
 INTO TABLE Photos
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -132,7 +155,7 @@ SET answers.photos = photos.max
 
 
 // Get last entries
-SELECT * FROM Questions ORDER BY question_id DESC LIMIT 1;
+SELECT * FROM Questions ORDER BY product_id DESC LIMIT 1;
 
 INSERT
   INTO Questions
@@ -155,3 +178,37 @@ VALUES
     0,
     0
   );
+
+
+  // test time
+    SELECT
+    question_id,
+    question_body,
+    question_date,
+    asker_name,
+    question_helpfulness,
+    reported,
+    (
+      SELECT JSON_OBJECTAGG(
+        Answers.answer_id, (JSON_OBJECT(
+          'id', answer_id,
+          'body', body,
+          'date', date_written,
+          'answerer_name', answerer_name,
+          'helpfulness', helpfulness,
+          'photos', (JSON_ARRAY())
+        ))
+      )
+      FROM Answers
+      WHERE question_id = Questions.question_id
+    ) AS answers
+  FROM Questions
+  WHERE product_id = 5 AND reported = 0;
+
+    SELECT url FROM Photos WHERE answer_id = 5;
+
+  SELECT * FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=18;
+
+
+  // add index
+  CREATE INDEX indexid ON Questions (product_id, question_id, asker_name);

@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const path = require('path');
 const port = 3000
 const db = require('../database');
 const bodyParser = require('body-parser');
@@ -184,7 +185,7 @@ app.put(`/qa/answers/:answer_id/report`, (req, res) => {
 
 app.get('/loaderio-597c9deecf9c4d42dc36e0c53aa75564.txt', (req, res) => {
   const options = {
-      root: path.join('../', __dirname)
+      root: path.join(__dirname)
   };
 
   const fileName = 'loaderio-597c9deecf9c4d42dc36e0c53aa75564.txt';

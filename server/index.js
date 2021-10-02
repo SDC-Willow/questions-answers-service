@@ -180,6 +180,23 @@ app.put(`/qa/answers/:answer_id/report`, (req, res) => {
   })
 })
 
+// loader.io
+
+app.get('/loaderio-597c9deecf9c4d42dc36e0c53aa75564.txt', (req, res) => {
+  const options = {
+      root: path.join('../', __dirname)
+  };
+
+  const fileName = 'loaderio-597c9deecf9c4d42dc36e0c53aa75564.txt';
+  res.sendFile(fileName, options, (err) => {
+      if (err) {
+          console.log(err);
+      } else {
+          console.log('Sent:', fileName);
+      }
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Questions and Answers Service listening at http://localhost:${port}`)

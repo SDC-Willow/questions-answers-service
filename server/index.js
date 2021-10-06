@@ -183,12 +183,12 @@ app.put(`/qa/answers/:answer_id/report`, (req, res) => {
 
 // loader.io
 
-app.get('/loaderio-888e2c2b0bf3f969cbaf006bdc5a7452.txt', (req, res) => {
+app.get('/loaderio-d4640213012ff7896e1f8a1353245bc7.txt', (req, res) => {
   const options = {
       root: path.join(__dirname)
   };
 
-  const fileName = 'loaderio-888e2c2b0bf3f969cbaf006bdc5a7452.txt';
+  const fileName = 'loaderio-d4640213012ff7896e1f8a1353245bc7.txt';
   res.sendFile(fileName, options, (err) => {
       if (err) {
           console.log(err);

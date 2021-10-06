@@ -108,7 +108,7 @@ const insertAnswer = (answerObject, callback) => {
   const unixTimestamp = Date.now();
   const insertString = `
     INSERT
-      INTO ANSWERS
+      INTO Answers
         (
           question_id,
           body,
@@ -135,7 +135,7 @@ const insertPhotos = (photosObject, callback) => {
   for (let i = 0; i < photosObject.photos.length; i++) {
     let insertString = `
       INSERT
-        INTO PHOTOS
+        INTO Photos
           (
             answer_id,
             url
@@ -156,7 +156,7 @@ const insertPhotos = (photosObject, callback) => {
 const incrementQuestionHelpfulness = (questionId, callback) => {
   let incrementString = `
     UPDATE
-      QUESTIONS
+      Questions
         SET
           question_helpfulness = question_helpfulness +1
         WHERE
@@ -167,7 +167,7 @@ const incrementQuestionHelpfulness = (questionId, callback) => {
 const reportQuestion = (questionId, callback) => {
   let reportString = `
     UPDATE
-      QUESTIONS
+      Questions
         SET
           reported = true
         WHERE
@@ -178,7 +178,7 @@ const reportQuestion = (questionId, callback) => {
 const incrementAnswerHelpfulness = (answerId, callback) => {
   let incrementString = `
   UPDATE
-    ANSWERS
+    Answers
       SET
         helpfulness = helpfulness + 1
       WHERE
@@ -189,7 +189,7 @@ const incrementAnswerHelpfulness = (answerId, callback) => {
 const reportAnswer = (answerId, callback) => {
   let reportString = `
     UPDATE
-      ANSWERS
+      Answers
         SET
           reported = true
         WHERE

@@ -133,6 +133,7 @@ app.put(`/qa/questions/:question_id/helpful`, (req, res) => {
   let questionId = parseInt(req.params.question_id);
   db.incrementQuestionHelpfulness(questionId, (error, result) => {
     if (error) {
+      console.log('error in making question helpful', error)
       res.sendStatus(500);
     } else {
       res.sendStatus(204);

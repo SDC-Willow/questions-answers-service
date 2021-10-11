@@ -6,6 +6,8 @@
 
 * Questions & Answers Module - Louis La
 
+![architecture](https://github.com/SDC-Willow/questions-answers-service/blob/main/screenshots/SDC-qna-backend-architecture.png)
+
 This Hack Reactor backend project involved building a RESTFUL API with a scalable backend architecture to support a front-end client. The goal was to deploy and scale a service to support (a minimum of) 100 requests per second to 10,000 requests per second on EC2 using a t2.micro instance.
 
 * Scaled the backend to support up to 10k requests per second using NGINX Load Balancer

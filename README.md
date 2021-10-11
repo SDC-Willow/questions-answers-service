@@ -1,12 +1,13 @@
 # System Design Capstone Project
 **Questions & Answers Service | Project Atelier**
 
+![architecture](https://github.com/SDC-Willow/questions-answers-service/blob/main/screenshots/SDC-qna-backend-architecture.png)
+
 **Overview**
 *Hack Reactor Cohort - RPP29*
 
 * Questions & Answers Module - Louis La
 
-![architecture](https://github.com/SDC-Willow/questions-answers-service/blob/main/screenshots/SDC-qna-backend-architecture.png)
 
 This Hack Reactor backend project involved building a RESTFUL API with a scalable backend architecture to support a front-end client. The goal was to deploy and scale a service to support (a minimum of) 100 requests per second to 10,000 requests per second on EC2 using a t2.micro instance.
 
@@ -55,6 +56,12 @@ The service uses a MySQL DBMS with 2+ million of entries. For the ETL process, S
 * Deployed 2 additional instances for servers to use with the round robin load balancing in NGINX (total 3 servers)
 * Achieved 10,000 RPS with average latency below 2000 ms
 
+![results](https://github.com/SDC-Willow/questions-answers-service/blob/main/screenshots/SDC-qna-stress-test-data.png)
+---
+
+*Front-end application connected to backend service*
+
+![frontend](https://github.com/SDC-Willow/questions-answers-service/blob/main/screenshots/Atelier-qna-frontend-with-backend-api.png)
 ---
 
 [Link to System Design Progress Journal](https://louis-systemdesign.blogspot.com/)

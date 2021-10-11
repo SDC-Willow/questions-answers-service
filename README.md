@@ -12,6 +12,16 @@ This Hack Reactor backend project involved building a RESTFUL API with a scalabl
 * Designed and built an API server that provided data to the client
 * Optimized service by analyzing query times and server responses
 * Deployed the service and successfully integrated it with the legacy code of the Front-end capstone application
+
+*Tools used*
+
+* POSTMAN
+* AWS EC2
+* Express
+* NGINX
+* K6
+* MySQL
+* loader io
 ---
 
 **Description**
@@ -24,6 +34,7 @@ The service uses a MySQL DBMS with 2+ million of entries. For the ETL process, S
 *RESTFUL API*
 
 * Defined routes according to the expected data by the client application
+* Used POSTMAN to test routes and query times
 
 *Local Stress Testing*
 

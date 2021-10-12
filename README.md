@@ -31,7 +31,7 @@ This Hack Reactor backend project involved building a RESTFUL API with a scalabl
 
 *Relational Database*
 
-The service uses a MySQL DBMS with 2+ million of entries. For the ETL process, SCP copy was used to load the csv data into the database.
+The service uses a MySQL DBMS with 10 million of entries. For the ETL process, SCP copy was used to load/seed the csv data into the database.
 * Indexed tables in database and to improve query times from 4 seconds to 5 - 7 miliseconds
 
 *RESTFUL API*
